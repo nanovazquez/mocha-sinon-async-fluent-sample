@@ -8,19 +8,8 @@ module.exports = function productService(
   auditService
   ) {
     return {
-      get: 	get,
-      create: create,
-      update: update,
-      del:  del
+      update: update
   };
-
-  function get(id) {
-
-  }
-
-  function create(item) {
-
-  }
 
   function update(item) {
   	return Promise.resolve()
@@ -45,9 +34,5 @@ module.exports = function productService(
   			return auditService.logUpdate(itemUpdated);
   		})
   	;
-  }
-
-  function del(item) {
-
   }
 };

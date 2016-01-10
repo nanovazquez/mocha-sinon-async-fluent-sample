@@ -1,15 +1,9 @@
+'use strict';
+
+require('./tests-setup')();
+
 var Promises = require('bluebird');
 var _ = require('lodash');
-
-var chai = require("chai");
-var sinon = require("sinon");
-var sinonChai = require("sinon-chai");
-var chaiAsPromised = require("chai-as-promised");
-chai.should();
-chai.use(sinonChai);
-chai.use(chaiAsPromised);
-require('sinon-as-promised');
-require('sinon-as-promised')(Promises);
 
 var ProductRepository = require('../src/productRepository');
 var AuditService = require('../src/auditService');
@@ -21,8 +15,8 @@ describe('productService', function() {
   var productService;
 
   beforeEach(function () {
-  	productRepository = sinon.stub(new ProductRepository());
-  	auditService = sinon.stub(new AuditService());
+  	productRepository = this.sinon.stub(new ProductRepository());
+  	auditService = this.sinon.stub(new AuditService());
     productService = new ProductService(productRepository, auditService);
   });
 
