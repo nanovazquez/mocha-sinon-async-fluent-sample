@@ -35,7 +35,7 @@ describe('productService', function() {
       beforeEach(function () {
         itemToUpdate = {id: 1, name: 'new name'};
         productRepository.update.withArgs(itemToUpdate).resolves(itemToUpdate);
-        auditService.logUpdate.withArgs(itemToUpdate).resolves(itemToUpdate);
+        auditService.logUpdate.withArgs(itemToUpdate).resolves({});
 
         return promise = productService.update(itemToUpdate);
       });
@@ -60,9 +60,33 @@ describe('productService', function() {
       });
     });
 
-    describe('when item is sent with invalid ID', function () {
+    describe('when item is sent with invalid name', function () {
       beforeEach(function () {
-        itemToUpdate = {id: -1, name: 'new name'};
+        itemToUpdate = {id: 1, name: ''};
+        return (promise = productService.update(itemToUpdate)).catch(_.noop);
+      });
+
+      it('should reject operation', function () {
+        promise.should.be.eventually.be.rejectedWith(new Error('Invalid name').message);
+      });
+
+      it('should not retrieve item from database', function () {
+        productRepository.get.should.not.have.been.called;
+      });
+
+      it('should not update item', function () {
+        productRepository.update.should.not.have.been.called;
+      });
+
+      it('should not log update', function () {
+        auditService.logUpdate.should.not.have.been.called;
+      });
+    });
+
+    describe('when item is not found in the database', function () {
+      beforeEach(function () {
+        itemToUpdate = {id: 5, name: 'new name'};
+        productRepository.get.withArgs(itemToUpdate).resolves(null);
 
         return (promise = productService.update(itemToUpdate)).catch(_.noop);
       });
@@ -71,12 +95,37 @@ describe('productService', function() {
         promise.should.be.eventually.be.rejectedWith(new Error('Invalid ID').message);
       });
 
-      it('should not retrieve current item from database', function () {
-        productRepository.get.should.not.have.been.called;
+      it('should try to retrieve item', function () {
+        productRepository.get.should.have.been.called;
       });
 
       it('should not update item', function () {
         productRepository.update.should.not.have.been.called;
+      });
+
+      it('should not log update', function () {
+        auditService.logUpdate.should.not.have.been.called;
+      });
+    });
+
+    describe('when update item fails', function () {
+      beforeEach(function () {
+        itemToUpdate = {id: 1, name: 'new name'};
+        productRepository.update.withArgs(itemToUpdate).rejects(new Error('Error while updating'));
+
+        return (promise = productService.update(itemToUpdate)).catch(_.noop);
+      });
+
+      it('should reject operation', function () {
+        promise.should.be.eventually.be.rejectedWith(new Error('Error while updating').message);
+      });
+
+      it('should retrieve item from database', function () {
+        productRepository.get.should.have.been.called;
+      });
+
+      it('should try to update item', function () {
+        productRepository.update.should.have.been.called;
       });
 
       it('should not log update', function () {
