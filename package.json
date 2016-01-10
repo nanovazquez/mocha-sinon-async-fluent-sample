@@ -1,0 +1,31 @@
+{
+  "name": "mocha-sinon-async-fluent-sample",
+  "version": "1.0.0",
+  "description": "A sample app with some examples on how to test promises and asynchronous code in JS using a fluent syntax.",
+  "scripts": {
+    "test": "mocha --recursive --colors --bail --throw-deprecation --check-leaks",
+    "test-debug": "mocha --recursive --colors --bail --throw-deprecation --check-leaks --debug --debug-brk"
+  },
+  "keywords": [
+    "mocha",
+    "sinon",
+    "chai",
+    "promises",
+    "fluent"
+  ],
+  "author": "nanovazquez",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "lodash": "^3.10.1",
+    "sinon-as-promised": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2",
+    "sinon-as-promised": "^4.0.0",
+    "sinon-chai": "^2.8.0"
+  }
+}
