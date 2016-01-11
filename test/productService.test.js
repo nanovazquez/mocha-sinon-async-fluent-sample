@@ -67,7 +67,7 @@ describe('productService', function() {
       });
 
       it('should reject operation', function () {
-        promise.should.be.eventually.be.rejectedWith(new Error('Invalid name').message);
+        return promise.should.be.eventually.be.rejectedWith(new Error('Invalid name').message);
       });
 
       it('should not retrieve item from database', function () {
@@ -92,7 +92,7 @@ describe('productService', function() {
       });
 
       it('should reject operation', function () {
-        promise.should.be.eventually.be.rejectedWith(new Error('Invalid ID').message);
+        return promise.should.be.eventually.be.rejectedWith(new Error('Invalid ID').message);
       });
 
       it('should try to retrieve item', function () {
@@ -117,7 +117,7 @@ describe('productService', function() {
       });
 
       it('should reject operation', function () {
-        promise.should.be.eventually.be.rejectedWith(new Error('Error while updating').message);
+        return promise.should.be.eventually.be.rejectedWith(new Error('Error while updating').message);
       });
 
       it('should retrieve item from database', function () {
