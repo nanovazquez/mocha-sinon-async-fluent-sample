@@ -5,7 +5,7 @@ A sample app with some examples on how to test promises and asynchronous code in
 ### Installation and usage
 
 ```
-git clone @git@github.com:nanovazquez/mocha-sinon-async-fluent-sample.git
+git clone git@github.com:nanovazquez/mocha-sinon-async-fluent-sample.git
 cd mocha-sinon-async-fluent-sample
 npm install
 
